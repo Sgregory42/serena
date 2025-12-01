@@ -46,6 +46,7 @@ class Language(str, Enum):
     PERL = "perl"
     CLOJURE = "clojure"
     ELIXIR = "elixir"
+    GLEAM = "gleam"
     ELM = "elm"
     TERRAFORM = "terraform"
     SWIFT = "swift"
@@ -172,6 +173,8 @@ class Language(str, Enum):
                 )
             case self.HASKELL:
                 return FilenameMatcher("*.hs", "*.lhs")
+            case self.GLEAM:
+                return FilenameMatcher("*.gleam")
             case _:
                 raise ValueError(f"Unhandled language: {self}")
 
@@ -317,6 +320,10 @@ class Language(str, Enum):
                 from solidlsp.language_servers.haskell_language_server import HaskellLanguageServer
 
                 return HaskellLanguageServer
+            case self.GLEAM:
+                from solidlsp.language_servers.gleam_language_server.gleam_language_server import GleamLanguageServer
+
+                return GleamLanguageServer
             case _:
                 raise ValueError(f"Unhandled language: {self}")
 

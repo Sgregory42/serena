@@ -284,6 +284,7 @@ markers = [
   "swift: language server running for Swift",
   "bash: language server running for Bash",
   "r: language server running for R",
+  "gleam: language server running for Gleam",
   "snapshot: snapshot tests for symbolic editing operations",
   "ruby: language server running for Ruby (uses ruby-lsp)",
   "zig: language server running for Zig",
@@ -305,5 +306,6 @@ markers = [
 # Ref: https://github.com/codespell-project/codespell#using-a-config-file
 skip = '.git*,*.svg,*.lock,*.min.*'
 check-hidden = true
+
 # ignore-regex = ''
 # ignore-words-list = ''

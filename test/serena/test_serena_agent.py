@@ -29,6 +29,7 @@ def serena_config():
         Language.PHP,
         Language.CSHARP,
         Language.CLOJURE,
+        Language.GLEAM,
     ]:
         repo_path = get_repo_path(language)
         if repo_path.exists():
@@ -130,6 +131,13 @@ class TestSerenaAgent:
                 marks=[pytest.mark.clojure, pytest.mark.skipif(clj.CLI_FAIL, reason=f"Clojure CLI not available: {clj.CLI_FAIL}")],
             ),
             pytest.param(Language.CSHARP, "Calculator", "Program.cs", "Program.cs", marks=pytest.mark.csharp),
+            pytest.param(
+                Language.GLEAM,
+                "User",
+                os.path.join("src", "test_repo", "user.gleam"),
+                os.path.join("src", "test_repo.gleam"),
+                marks=pytest.mark.gleam,
+            ),
         ],
         indirect=["serena_agent"],
     )
@@ -150,9 +158,9 @@ class TestSerenaAgent:
         result = find_refs_tool.apply_ex(name_path=def_symbol["name_path"], relative_path=def_symbol["relative_path"])
 
         refs = json.loads(result)
-        assert any(
-            ref["relative_path"] == ref_file for ref in refs
-        ), f"Expected to find reference to {symbol_name} in {ref_file}. refs={refs}"
+        assert any(ref["relative_path"] == ref_file for ref in refs), (
+            f"Expected to find reference to {symbol_name} in {ref_file}. refs={refs}"
+        )
 
     @pytest.mark.parametrize(
         "serena_agent,name_path,substring_matching,expected_symbol_name,expected_kind,expected_file",
